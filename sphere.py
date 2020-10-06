@@ -194,3 +194,110 @@ class AABB(object):
                          normal = intersect.normal,
                          sceneObject = self)
 
+
+#código para renderizar una pirámide
+class Pyramid(object):
+    def __init__(self, arrVec, material):
+        self.arrVec = arrVec
+        self.material = material
+        #print("aqui")
+
+    def side(self, v0, v1, v2, origin, direction):
+        v0v1 = subtract(v1[0], v0[0],v1[1], v0[1],v1[2], v0[2])
+        v0v2 = subtract(v2[0], v0[0],v2[1], v0[1],v2[2], v0[2])
+
+        #N = multiN(cross(v0v1, v0v2),1)
+        N = cross(v0v1, v0v2)
+        
+        # area2 = length(N)
+
+        raydirection = dot(N, direction[0],direction[1],direction[2])
+
+        if abs(raydirection) < 0.0001:
+            return None
+        
+        d = dot(N, v0[0],v0[1],v0[2])
+        #print('D', d)
+        
+        t = (dot(N, origin[0],origin[1],origin[2]) + d)/raydirection
+        
+        #print('T', t)
+        
+        if t < 0:
+            return None
+
+        P = sum(origin, multiN(t, direction))
+        #P = V3(-1,1,0)
+        U, V, W = barycentric(v0, v1, v2, P)
+        #print(U, V, W)
+        if U<0 or V<0 or W<0:
+            return None
+        else: 
+            return Intersect(distance = d,
+                         point = P,
+                         normal = norm(N),
+                         sceneObject = self)
+        #assert t<0, 'murio'
+        
+        
+
+        edge0 = subtract(v1[0], v0[0],v1[1], v0[1],v1[2], v0[2])
+        vp0 = subtract(p[0], v0[0],p[1], v0[1],p[2], v0[2])
+
+        C = cross(edge0, vp0)
+
+        nc = dot(N, C[0],C[1],C[2])
+        #print("C", nc)
+        if nc < 0:
+            return None
+
+        edge1 = sub(v2[0], v1[0],v2[1], v1[1],v2[2], v1[2])
+        vp1 = sub(p[0], v1[0],p[1], v1[1],p[2], v1[2])
+
+        C = cross(edge1, vp1)
+
+        if dot(N, C[0],C[1],C[2]) < 0:
+            return None
+
+        edge2 = sub(v0[0], v2[0],v0[1], v2[1],v0[2], v2[2])
+        vp2 = sub(p[0], v2[0],p[1], v2[1],p[2], v2[2])
+
+        C = cross(edge2, vp2)
+
+        if dot(N, C[0],C[1],C[2]) < 0:
+            return None
+
+        return Intersect(distance = (t / raydirection),
+                         point = P,
+                         normal = norm(N),
+                         sceneObject = self)
+
+
+    def ray_intersect(self, origin, direction):
+        v0, v1, v2, v3 = self.arrVec
+        planes = [
+        self.side(v0, v3, v2, origin, direction),
+        self.side(v0, v1, v2, origin, direction),
+        self.side(v1, v3, v2, origin, direction),
+        self.side(v0, v1, v3, origin, direction)
+        ]
+
+
+
+        t = float('inf')
+        intersect = None
+
+        for plane in planes:
+            #planeInter = plane.rayIntersect(orig, direction)
+            if plane is not None:
+                if plane.distance < t:
+                    t = plane.distance
+                    intersect = plane
+
+        if intersect is None:
+            return None
+
+        return Intersect(distance = intersect.distance,
+                         point = intersect.point,
+                         normal = intersect.normal,
+                         sceneObject = self)

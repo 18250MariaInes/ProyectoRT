@@ -112,3 +112,34 @@ def multColor(v1,v2):
     res.append(v1[1]*v2[1])
     res.append(v1[2]*v2[2])
     return res
+
+def barycentric(A, B, C, P):
+    cx, cy, cz = cross(
+        (B[0] - A[0], C[0] - A[0], A[0] - P[0]),
+        (B[1] - A[1], C[1] - A[1], A[1] - P[1])
+    )
+
+    if abs(cz) < 1:
+        return -1, -1, -1
+
+    u = cx / cz
+    v = cy / cz
+    w = 1 - (cx + cy) / cz
+
+    return w, v, u
+
+def norm(v0):
+    
+    v0length = length(v0)
+
+    if not v0length:
+        return V3(0, 0, 0)
+
+    return (v0[0]/v0length, v0[1]/v0length, v0[2]/v0length)
+
+def length(v0):
+    """
+      Input: 1 size 3 vector
+      Output: Scalar with the length of the vector
+    """
+    return (v0[0]**2 + v0[1]**2 + v0[2]**2)**0.5
