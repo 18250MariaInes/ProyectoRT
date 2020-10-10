@@ -147,16 +147,18 @@ class AABB(object):
         self.material = material
         self.planes = []
 
-        halfSize = size / 2
+        halfSizeX = size[0] / 2
+        halfSizeY = size[1] / 2
+        halfSizeZ = size[2] / 2
 
-        self.planes.append( Plane( add(position, (halfSize,0,0)), (1,0,0), material))
-        self.planes.append( Plane( add(position, (-halfSize,0,0)), (-1,0,0), material))
+        self.planes.append( Plane( add(position, (halfSizeX,0,0)), (1,0,0), material))
+        self.planes.append( Plane( add(position, (-halfSizeX,0,0)), (-1,0,0), material))
 
-        self.planes.append( Plane( add(position, (0,halfSize,0)), (0,1,0), material))
-        self.planes.append( Plane( add(position, (0,-halfSize,0)), (0,-1,0), material))
+        self.planes.append( Plane( add(position, (0,halfSizeY,0)), (0,1,0), material))
+        self.planes.append( Plane( add(position, (0,-halfSizeY,0)), (0,-1,0), material))
 
-        self.planes.append( Plane( add(position, (0,0,halfSize)), (0,0,1), material))
-        self.planes.append( Plane( add(position, (0,0,-halfSize)), (0,0,-1), material))
+        self.planes.append( Plane( add(position, (0,0,halfSizeZ)), (0,0,1), material))
+        self.planes.append( Plane( add(position, (0,0,-halfSizeZ)), (0,0,-1), material))
 
 
     def ray_intersect(self, orig, dir):
@@ -167,8 +169,8 @@ class AABB(object):
         boundsMax = [0,0,0]
 
         for i in range(3):
-            boundsMin[i] = self.position[i] - (epsilon + self.size / 2)
-            boundsMax[i] = self.position[i] + (epsilon + self.size / 2)
+            boundsMin[i] = self.position[i] - (epsilon + self.size[i] / 2)
+            boundsMax[i] = self.position[i] + (epsilon + self.size[i] / 2)
 
         t = float('inf')
         intersect = None
