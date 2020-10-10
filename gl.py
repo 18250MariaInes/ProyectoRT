@@ -326,6 +326,13 @@ class Raytracer(object):
         #finalColor = (ambientColor + (1 - shadow_intensity) * (diffuseColor + specColor)) * objectColor
         if material.matType == OPAQUE:
             finalColorp=sum(ambientColor, multiN((1 - shadow_intensity),sum(diffuseColor, specColor)))
+            if material.texture and intersect.texCoords:
+
+                texColor = material.texture.getColor(intersect.texCoords[0], intersect.texCoords[1])
+
+                finalColorp = multColor(([texColor[2] / 255,
+                                        texColor[1] / 255,
+                                        texColor[0] / 255]), finalColorp)
         elif (material.matType== REFLECTIVE):
             reflectp= self.reflectVector(intersect.normal, view_dirp)
             reflectColor = self.castRay(intersect.point, reflectp, intersect.sceneObject, recursion + 1)

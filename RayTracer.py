@@ -25,9 +25,12 @@ pink_bow=Material(diffuse = color(0.984, 0.6, 1), spec = 64)
 christmas_green=Material(diffuse= color(0, 0.82, 0.01),spec = 64)
 christmas_base=Material(diffuse= color(0.53, 0.29, 0),spec = 64)
 mirror = Material( spec = 64, matType = REFLECTIVE)
+bear = Material(diffuse= color(0.54, 0.39, 0.14),spec = 16)
 
 red_bow=Material(diffuse = color(1, 0, 0.01),spec = 64)
-
+boxMat1 = Material(texture = Texture('gw11.bmp'))
+boxMat2 = Material(texture = Texture('gw6.bmp'))
+boxMat3 = Material(texture = Texture('gw7.bmp'))
 
 
 width = 512
@@ -39,38 +42,38 @@ r.envmap = Envmap('snowp.bmp')
 r.pointLight = PointLight(position = (0,0,0), intensity = 1)
 r.ambientLight = AmbientLight(strength = 0.1)
 
-"""r.scene.append( Sphere(( 1, 1, -8), 1.5, brick) )
-r.scene.append( Sphere(( 0, 0, -5), 0.5, stone) )
-r.scene.append( Sphere((-3, 3, -10),  2, mirror) )
-r.scene.append( Sphere((-3, -1.5, -10), 1.5, mirror) )"""
-#cuarto
-"""r.scene.append( Plane((0, -3, 0), (0,1,0), stone) )
-r.scene.append( Plane((0, 3, 0), (0,1,0), stone) )
-r.scene.append( Plane((0, 0, -10), (0,0,1), stone) )
-r.scene.append( Plane(( -3,0, 0), (1,0,0), stone) )
-r.scene.append( Plane(( 3, 0,0), (1,0,0), stone) )"""
-#cubos
-"""r.scene.append( AABB((1.5, -1, -5), 0.8, carrot ) )
-r.scene.append( AABB((-1.5, -1, -5), 0.8, pink_center ) )"""
-"""r.scene.append( AABB(V3(1.5, -1.5, -5), 1.5, mirror ) )
-r.scene.append( AABB(V3(-1.5, -1.5, -5), 1.5, glass ) )"""
+#arbol de navidad
 r.scene.append(Pyramid([(-6, -2, -10), (-4, 1.8, -5), (-10, -2, -10), (-4, -1, -7.5)], christmas_green))
 r.scene.append( AABB((-3.8, -1.5, -5), (0.5,1.07,0.5), christmas_base ) )
 #gift1
-r.scene.append( AABB((-2, -1.5, -5), (1,1,1), christmas_green ) )
+r.scene.append( AABB((-2, -1.5, -5), (1,1,1), boxMat1 ) )
 r.scene.append( Sphere((-1.90, -0.805,  -4.6), 0.16, red_bow) )
 r.scene.append( Sphere((-2, -0.8,  -4.5), 0.13, red_bow) )
 r.scene.append( Sphere((-2.10, -0.805,  -4.6), 0.16, red_bow) )
 #gift2
-r.scene.append( AABB((0, -1.5, -5), (1,1,1), carrot ) )
+r.scene.append( AABB((0, -1.5, -5), (1,1,1), boxMat2 ) )
 r.scene.append( Sphere((-0.10, -0.805,  -4.6), 0.16, red_bow) )
 r.scene.append( Sphere((0, -0.8,  -4.5), 0.13, red_bow) )
 r.scene.append( Sphere((0.10, -0.805,  -4.6), 0.16, red_bow) )
 #gift3
-r.scene.append( AABB((2, -1.5, -5), (1,1,1), pink_center ) )
+r.scene.append( AABB((2, -1.5, -5), (1,1,1), boxMat3 ) )
 r.scene.append( Sphere((1.90, -0.805,  -4.6), 0.16, red_bow) )
 r.scene.append( Sphere((2, -0.8,  -4.5), 0.13, red_bow) )
 r.scene.append( Sphere((2.10, -0.805,  -4.6), 0.16,red_bow) )
+#teddy bear
+#ears
+r.scene.append( Sphere((0.7, -0.6, -5), 0.2, christmas_base) )
+r.scene.append( Sphere((1.3, -0.6, -5), 0.2, christmas_base) )
+#arms
+r.scene.append( Sphere((1.2, -1.2, -4.5), 0.15, christmas_base) )
+r.scene.append( Sphere((0.8, -1.2, -4.5), 0.15, christmas_base) )
+#legs
+r.scene.append( Sphere((1.2, -1.7, -4.5), 0.15, christmas_base) )
+r.scene.append( Sphere((0.8, -1.7, -4.5), 0.15, christmas_base) )
+#head
+r.scene.append( Sphere((1, -0.9, -4.9), 0.35, bear) )
+#body
+r.scene.append( Sphere((1, -1.5, -5), 0.4, bear) )
 #globo de nieve
 r.scene.append( Sphere(( -1, -1.5, -5), 0.4, mirror) )
 r.scene.append( AABB((-1, -1.8, -5), (0.5,0.5,0.5), christmas_base ) )

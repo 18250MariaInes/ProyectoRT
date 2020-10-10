@@ -130,16 +130,13 @@ def barycentric(A, B, C, P):
 
 def norm(v0):
     
-    v0length = length(v0)
+    v0length = (v0[0]**2 + v0[1]**2 + v0[2]**2)**0.5
 
     if not v0length:
         return V3(0, 0, 0)
 
     return (v0[0]/v0length, v0[1]/v0length, v0[2]/v0length)
 
-def length(v0):
-    """
-      Input: 1 size 3 vector
-      Output: Scalar with the length of the vector
-    """
-    return (v0[0]**2 + v0[1]**2 + v0[2]**2)**0.5
+"""def length(v0):
+    
+    return (v0[0]**2 + v0[1]**2 + v0[2]**2)**0.5"""

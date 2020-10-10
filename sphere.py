@@ -17,18 +17,20 @@ WHITE = color(1,1,1)
 
 class Material(object):
     # Un material como visto en Unity que rige como se comportara con la luz. Como los materiales de roca, ladrillo, entre otros
-    def __init__(self, diffuse = WHITE, spec = 0, matType = OPAQUE):
+    def __init__(self, diffuse = WHITE, spec = 0, texture = None, matType = OPAQUE):
         # color pero se esparce cuando tiene luz
         self.diffuse = diffuse
         self.spec = spec
         self.matType = matType
+        self.texture = texture
 
 
 class Intersect(object): #función que devuelve la distancia de la intersección
-    def __init__(self, distance, point, normal, sceneObject):
+    def __init__(self, distance, point, normal, texCoords, sceneObject):
         self.distance = distance
         self.point = point
         self.normal = normal
+        self.texCoords = texCoords
         self.sceneObject = sceneObject
 
 class AmbientLight(object):
@@ -101,6 +103,7 @@ class Sphere(object):
         return Intersect(distance = t0,
                          point = hitp,
                          normal = norm2,
+                         texCoords = None,
                          sceneObject = self)
 #clase para plano infinitos
 class Plane(object):
@@ -136,6 +139,7 @@ class Plane(object):
                 return Intersect(distance = t,
                                  point = hit,
                                  normal = self.normal,
+                                 texCoords = None,
                                  sceneObject = self)
 
         return None
@@ -174,13 +178,14 @@ class AABB(object):
 
         t = float('inf')
         intersect = None
+        uvs=None
 
         for plane in self.planes:
             planeInter = plane.ray_intersect(orig, dir)
 
             if planeInter is not None:
 
-                # Si estoy dentro del bounding box
+                # Si dentro del bounding box
                 if planeInter.point[0] >= boundsMin[0] and planeInter.point[0] <= boundsMax[0]:
                     if planeInter.point[1] >= boundsMin[1] and planeInter.point[1] <= boundsMax[1]:
                         if planeInter.point[2] >= boundsMin[2] and planeInter.point[2] <= boundsMax[2]:
@@ -188,12 +193,30 @@ class AABB(object):
                                 t = planeInter.distance
                                 intersect = planeInter
 
+                                if abs(plane.normal[0]) > 0:
+                                    # mapear uvs para eje x. Uso coordenadas en Y y Z.
+                                    u = (planeInter.point [1] - boundsMin[1]) / (boundsMax[1] - boundsMin[1])
+                                    v = (planeInter.point [2] - boundsMin[2]) / (boundsMax[2] - boundsMin[2])
+
+                                elif abs(plane.normal[1]) > 0:
+                                    # mapear uvs para eje y. Uso coordenadas en X y Z.
+                                    u = (planeInter.point [0] - boundsMin[0]) / (boundsMax[0] - boundsMin[0])
+                                    v = (planeInter.point [2] - boundsMin[2]) / (boundsMax[2] - boundsMin[2])
+
+                                elif abs(plane.normal[2]) > 0:
+                                    # mapear uvs para eje Z. Uso coordenadas en X y Y.
+                                    u = (planeInter.point [0] - boundsMin[0]) / (boundsMax[0] - boundsMin[0])
+                                    v = (planeInter.point [1] - boundsMin[1]) / (boundsMax[1] - boundsMin[1])
+
+                                uvs = [u, v]
+
         if intersect is None:
             return None
 
         return Intersect(distance = intersect.distance,
                          point = intersect.point,
                          normal = intersect.normal,
+                         texCoords = uvs,
                          sceneObject = self)
 
 
@@ -238,6 +261,7 @@ class Pyramid(object):
             return Intersect(distance = d,
                          point = P,
                          normal = norm(N),
+                         texCoords = None,
                          sceneObject = self)
         #assert t<0, 'murio'
         
@@ -272,6 +296,7 @@ class Pyramid(object):
         return Intersect(distance = (t / raydirection),
                          point = P,
                          normal = norm(N),
+                         texCoords = None,
                          sceneObject = self)
 
 
@@ -302,4 +327,5 @@ class Pyramid(object):
         return Intersect(distance = intersect.distance,
                          point = intersect.point,
                          normal = intersect.normal,
+                         texCoords = None,
                          sceneObject = self)
