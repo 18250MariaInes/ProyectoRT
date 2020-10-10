@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-DR3 Planes & Cubes
+Proyecto RayTracing
 Main
 """
 
@@ -48,17 +48,17 @@ r.scene.append( AABB((-3.8, -1.5, -5), (0.5,1.07,0.5), christmas_base ) )
 #gift1
 r.scene.append( AABB((-2, -1.5, -5), (1,1,1), boxMat1 ) )
 r.scene.append( Sphere((-1.90, -0.805,  -4.6), 0.16, red_bow) )
-r.scene.append( Sphere((-2, -0.8,  -4.5), 0.13, red_bow) )
+r.scene.append( Sphere((-2, -0.8,  -4.5), 0.12, red_bow) )
 r.scene.append( Sphere((-2.10, -0.805,  -4.6), 0.16, red_bow) )
 #gift2
 r.scene.append( AABB((0, -1.5, -5), (1,1,1), boxMat2 ) )
 r.scene.append( Sphere((-0.10, -0.805,  -4.6), 0.16, red_bow) )
-r.scene.append( Sphere((0, -0.8,  -4.5), 0.13, red_bow) )
+r.scene.append( Sphere((0, -0.8,  -4.5), 0.12, red_bow) )
 r.scene.append( Sphere((0.10, -0.805,  -4.6), 0.16, red_bow) )
 #gift3
 r.scene.append( AABB((2, -1.5, -5), (1,1,1), boxMat3 ) )
 r.scene.append( Sphere((1.90, -0.805,  -4.6), 0.16, red_bow) )
-r.scene.append( Sphere((2, -0.8,  -4.5), 0.13, red_bow) )
+r.scene.append( Sphere((2, -0.8,  -4.5), 0.12, red_bow) )
 r.scene.append( Sphere((2.10, -0.805,  -4.6), 0.16,red_bow) )
 #teddy bear
 #ears
@@ -72,6 +72,7 @@ r.scene.append( Sphere((1.2, -1.7, -4.5), 0.15, christmas_base) )
 r.scene.append( Sphere((0.8, -1.7, -4.5), 0.15, christmas_base) )
 #head
 r.scene.append( Sphere((1, -0.9, -4.9), 0.35, bear) )
+r.scene.append( Sphere((1, -0.9, -4.55), 0.05, coal) )
 #body
 r.scene.append( Sphere((1, -1.5, -5), 0.4, bear) )
 #globo de nieve

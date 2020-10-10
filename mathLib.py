@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-DR3 Planes & Cubes
+Proyecto RayTracing
 Libreria de operaciones matemáticas
 """
 
@@ -113,6 +113,7 @@ def multColor(v1,v2):
     res.append(v1[2]*v2[2])
     return res
 
+#funciones para hacer la piramide
 def barycentric(A, B, C, P):
     cx, cy, cz = cross(
         (B[0] - A[0], C[0] - A[0], A[0] - P[0]),
@@ -136,7 +137,3 @@ def norm(v0):
         return V3(0, 0, 0)
 
     return (v0[0]/v0length, v0[1]/v0length, v0[2]/v0length)
-
-"""def length(v0):
-    
-    return (v0[0]**2 + v0[1]**2 + v0[2]**2)**0.5"""

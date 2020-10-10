@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-DR3 Planes & Cubes
+Proyecto RayTracing
 Libreria de operaciones
 """
 import struct
